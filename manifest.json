@@ -10,8 +10,8 @@
   },
 
   "background": {
-    "scripts": ["event.js"],
-    "persistent": true
+    "scripts": ["background.js"],
+    "persistent": false
   },
 
   "content_scripts": [
