@@ -1,0 +1,25 @@
+{
+  "manifest_version": 2,
+
+  "name": "Meet",
+  "description": "Automate meet actions",
+  "version": "1.0",
+  "page_action": {
+    "default_popup": "index.html",
+    "default_title": "Meet"
+  },
+
+  "background": {
+    "scripts": ["event.js"],
+    "persistent": true
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["https://meet.google.com/*"],
+      "js": ["content.js"]
+    }
+  ],
+
+  "permissions": ["tabs", "https://meet.google.com/*", "storage"]
+}
