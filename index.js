@@ -1,25 +1,26 @@
-function promisifiedGetLink() {
+const linkContainer = document.querySelector('.link');
+const addButton = document.querySelector('.addBtn');
+const helperText = document.querySelector('.helperText');
+const addedIcon = document.querySelector('.added');
+const notAddedIcon = document.querySelector('.notAdded');
+
+function promisifiedData() {
   return new Promise((resolve, reject) => {
-    chrome.storage.sync.get('link', (data) => {
-      resolve(data.link);
+    chrome.storage.sync.get(null, (data) => {
+      resolve(data);
     });
   });
 }
 
-function promisifiedGetLinks() {
-  return new Promise((resolve, reject) => {
-    chrome.storage.sync.get('links', (data) => {
-      resolve(data.links);
-    });
-  });
+async function getData() {
+  return await promisifiedData();
 }
 
-async function getLink() {
-  return await promisifiedGetLink();
-}
-
-async function getAllLinks() {
-  return await promisifiedGetLinks();
+function updateStyle() {
+  addButton.style.display = 'none';
+  helperText.style.display = 'block';
+  addedIcon.style.display = 'block';
+  notAddedIcon.style.display = 'none';
 }
 
 function addLink(link, links) {
@@ -30,20 +31,25 @@ function addLink(link, links) {
   ) {
     const updatedLinks = [...links, link];
     chrome.storage.sync.set({ links: updatedLinks });
+    updateStyle();
   } else {
     const newLinks = [link];
     chrome.storage.sync.set({ links: newLinks });
+    updateStyle();
   }
 }
 
 async function init() {
-  const link = await getLink();
-  const links = await getAllLinks();
-  const linkContainer = document.querySelector('#link');
-  const addButton = document.querySelector('#add');
+  const { link, links } = await getData();
   linkContainer.innerHTML = link;
-  if (!links.length || !links.includes(link)) {
-    addButton.style.opacity = '1';
+  if (
+    (!links.length || !links.includes(link)) &&
+    link !== 'https://meet.google.com/'
+  ) {
+    addButton.style.display = 'block';
+    notAddedIcon.style.display = 'block';
+  } else {
+    addedIcon.style.display = 'block';
   }
 
   addButton.addEventListener('click', () => addLink(link, links));

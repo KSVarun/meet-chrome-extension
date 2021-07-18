@@ -1,22 +1,58 @@
-chrome.runtime.sendMessage({ todo: 'showPageAction' });
+function sendMessage(message) {
+  chrome.runtime.sendMessage({ todo: message });
+}
 
-chrome.storage.sync.set({ link: window.location.href });
+function setData(data) {
+  chrome.storage.sync.set(data);
+}
 
-chrome.storage.sync.get('links', (data) => {
-  if (data.links.includes(window.location.href)) {
-    setTimeout(() => {
-      if (document.querySelector('div[jsname=Qx7uuf]')) {
-        const joinNowButton = document.querySelector('div[jsname=Qx7uuf]');
-        joinNowButton.click();
+function promisifiedData() {
+  return new Promise((resolve, reject) => {
+    chrome.storage.sync.get(null, (data) => {
+      resolve(data);
+    });
+  });
+}
+
+async function getData() {
+  return await promisifiedData();
+}
+
+function join() {
+  setTimeout(() => {
+    if (document.querySelector('div[jsname=Qx7uuf]')) {
+      const joinNowButton = document.querySelector('div[jsname=Qx7uuf]');
+      joinNowButton.click();
+    }
+
+    const muteButton = document.querySelectorAll('div[jscontroller=lCGUBd]')[0];
+    if (muteButton) {
+      const isMuted = muteButton.getAttribute('data-is-muted');
+      if (isMuted === 'false') {
+        muteButton.click();
       }
+    }
 
-      const muteButton = document.querySelector('div[jscontroller=lCGUBd]');
-      if (muteButton) {
-        const isMuted = muteButton.getAttribute('data-is-muted');
-        if (isMuted === 'false') {
-          muteButton.click();
-        }
+    const cancelVideoButton = document.querySelectorAll(
+      'div[jscontroller=lCGUBd]'
+    )[1];
+    if (cancelVideoButton) {
+      const isVideoCanceled = cancelVideoButton.getAttribute('data-is-muted');
+      if (isVideoCanceled === 'false') {
+        cancelVideoButton.click();
       }
-    }, 4000);
+    }
+  }, 4000);
+}
+
+async function init() {
+  const link = window.location.href;
+  sendMessage('showPageAction');
+  setData({ link: link });
+  const { links } = await getData();
+  if (links && links.includes(link)) {
+    join();
   }
-});
+}
+
+init();
