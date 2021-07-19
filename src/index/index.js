@@ -142,6 +142,8 @@ async function init() {
     notAddedIcon.style.display = 'block';
   } else {
     addedIcon.style.display = 'block';
+    linkName.style.display = 'none';
+    editIcon.style.display = 'none';
   }
 
   addButton.addEventListener('click', () => addLink(link, links));
