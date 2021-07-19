@@ -3,7 +3,7 @@ const noLinkContainer = document.querySelector('.noLinksTitle');
 const savedLinksTitle = document.querySelector('.title');
 
 function promisifiedData() {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     chrome.storage.sync.get(null, (data) => {
       resolve(data);
     });

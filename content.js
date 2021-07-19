@@ -7,7 +7,7 @@ function setData(data) {
 }
 
 function promisifiedData() {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     chrome.storage.sync.get(null, (data) => {
       resolve(data);
     });

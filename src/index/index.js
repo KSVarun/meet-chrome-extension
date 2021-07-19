@@ -5,7 +5,9 @@ const addedIcon = document.querySelector('.added');
 const notAddedIcon = document.querySelector('.notAdded');
 const settingsIcon = document.querySelector('.settings');
 const reloadIcon = document.querySelector('.iconRefresh');
-const linkNameContainer = document.querySelector('.linkName');
+const linkName = document.querySelector('.linkName');
+const linkNameInput = document.querySelector('.linkNameInput');
+const editIcon = document.querySelector('.editIcon');
 
 const monthMap = {
   1: 'Jan',
@@ -23,7 +25,7 @@ const monthMap = {
 };
 
 function promisifiedData() {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     chrome.storage.sync.get(null, (data) => {
       resolve(data);
     });
@@ -68,8 +70,10 @@ function getDate() {
 }
 
 function getNewLink(link) {
+  const title =
+    linkNameInput.value.length > 0 ? linkNameInput.value : linkName.innerHTML;
   return {
-    title: 'Meet',
+    title: title,
     link: link,
     date: getDate(),
   };
@@ -118,10 +122,18 @@ function checkLinkExistance(newLink, links) {
   return isPresent;
 }
 
+function editLinkName() {
+  const linkNameValue = linkName.innerHTML;
+  linkNameInput.value = linkNameValue;
+  linkName.style.display = 'none';
+  linkNameInput.style.display = 'inline-block';
+}
+
 async function init() {
+  linkNameInput.style.display = 'none';
   const { link, links } = await getData();
   linkContainer.innerHTML = link;
-  linkNameContainer.innerHTML = 'Meet';
+  linkName.innerHTML = 'Meet';
   if (
     (!links || !checkLinkExistance(link, links)) &&
     link !== 'https://meet.google.com/'
@@ -135,6 +147,7 @@ async function init() {
   addButton.addEventListener('click', () => addLink(link, links));
   settingsIcon.addEventListener('click', openOptionsPage);
   reloadIcon.addEventListener('click', reloadPage);
+  editIcon.addEventListener('click', editLinkName);
 }
 
 init();

@@ -50,8 +50,7 @@
   justify-content: center;
 }
 
-.link,
-.linkName {
+.link {
   margin-bottom: var(--margin);
   align-self: flex-start;
 }
@@ -110,9 +109,26 @@
   transform: translate(-50%, -50%) rotate(45deg);
 }
 
-.iconRefresh {
+.iconRefresh,
+.editIcon {
   width: var(--iconSize);
   height: var(--iconSize);
-  margin-left: 8px;
   cursor: pointer;
+}
+
+.iconRefresh {
+  margin-left: 8px;
+}
+
+.linkNameContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--margin);
+  align-self: flex-start;
+  width: 100%;
+  align-items: center;
+}
+
+.linkNameInput {
+  width: 90%;
 }
