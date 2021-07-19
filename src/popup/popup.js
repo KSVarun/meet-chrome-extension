@@ -28,7 +28,6 @@ function getNewLink(link) {
 }
 
 function addLink(link, links) {
-  sayHi();
   if (
     links.length &&
     !links.includes(link) &&
@@ -62,13 +61,14 @@ function editLinkName() {
   linkNameInput.value = linkNameValue;
   linkName.style.display = 'none';
   linkNameInput.style.display = 'inline-block';
+  linkNameInput.focus();
 }
 
 async function init() {
   linkNameInput.style.display = 'none';
   const { link, links } = await getData();
   linkContainer.innerHTML = link;
-  linkName.innerHTML = 'Meet';
+  linkName.innerHTML = 'Untitled Meet';
   if (
     (!links || !checkLinkExistance(link, links)) &&
     link !== 'https://meet.google.com/'

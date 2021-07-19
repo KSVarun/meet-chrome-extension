@@ -11,7 +11,7 @@
   },
   "page_action": {
     "default_popup": "src/popup/popup.html",
-    "default_title": "Meet"
+    "default_title": "AutoJoin"
   },
 
   "background": {
