@@ -1,3 +1,4 @@
+import { getData, setData, getDate, checkLinkExistance } from '../../utils.js';
 const linkContainer = document.querySelector('.link');
 const addButton = document.querySelector('.addBtn');
 const helperText = document.querySelector('.helperText');
@@ -9,64 +10,11 @@ const linkName = document.querySelector('.linkName');
 const linkNameInput = document.querySelector('.linkNameInput');
 const editIcon = document.querySelector('.editIcon');
 
-const monthMap = {
-  1: 'Jan',
-  2: 'Feb',
-  3: 'March',
-  4: 'April',
-  5: 'May',
-  6: 'June',
-  7: 'July',
-  8: 'Aug',
-  9: 'Sep',
-  10: 'Oct',
-  11: 'Nov',
-  12: 'Dec',
-};
-
-function promisifiedData() {
-  return new Promise((resolve) => {
-    chrome.storage.sync.get(null, (data) => {
-      resolve(data);
-    });
-  });
-}
-
-async function getData() {
-  return await promisifiedData();
-}
-
 function updateStyle() {
   addButton.style.display = 'none';
   helperText.style.display = 'flex';
   addedIcon.style.display = 'block';
   notAddedIcon.style.display = 'none';
-}
-
-function getMonth(month) {
-  return monthMap[month];
-}
-
-function getTime(date) {
-  return (
-    date.getHours().toString() +
-    ':' +
-    (date.getMinutes() < 10 ? '0' : '') +
-    date.getMinutes().toString()
-  );
-}
-
-function getDate() {
-  let date = new Date();
-  date =
-    date.getDate().toString() +
-    'th ' +
-    getMonth(date.getMonth()) +
-    ' ' +
-    date.getFullYear() +
-    ' ' +
-    getTime(date);
-  return date;
 }
 
 function getNewLink(link) {
@@ -79,11 +27,8 @@ function getNewLink(link) {
   };
 }
 
-function setData(data) {
-  chrome.storage.sync.set(data);
-}
-
 function addLink(link, links) {
+  sayHi();
   if (
     links.length &&
     !links.includes(link) &&
@@ -110,16 +55,6 @@ function reloadPage() {
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     chrome.tabs.update(tabs[0].id, { url: tabs[0].url });
   });
-}
-
-function checkLinkExistance(newLink, links) {
-  let isPresent = false;
-  links.forEach((link) => {
-    if (link.link === newLink) {
-      isPresent = true;
-    }
-  });
-  return isPresent;
 }
 
 function editLinkName() {
