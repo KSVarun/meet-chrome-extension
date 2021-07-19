@@ -5,7 +5,7 @@
   "description": "Automate meet actions",
   "version": "1.0",
   "page_action": {
-    "default_popup": "index.html",
+    "default_popup": "src/index/index.html",
     "default_title": "Meet"
   },
 
@@ -20,6 +20,8 @@
       "js": ["content.js"]
     }
   ],
+
+  "options_page": "src/options/options.html",
 
   "permissions": ["tabs", "https://meet.google.com/*", "storage"]
 }

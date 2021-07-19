@@ -1,0 +1,118 @@
+:root {
+  --size: 40px;
+  --margin: 10px;
+  --iconSize: 15px;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 14rem;
+}
+
+.helperText {
+  display: flex;
+  align-items: center;
+}
+
+.heading {
+  margin-top: unset;
+  margin-bottom: unset;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.addBtn {
+  width: 4rem;
+  height: 1.5rem;
+  color: white;
+  background: black;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: box-shadow 0.4s;
+}
+
+.addBtn:hover {
+  box-shadow: 3px 5px 10px 0px #888888;
+}
+
+.tickContainer {
+  width: var(--size);
+  height: var(--size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.link,
+.linkName {
+  margin-bottom: var(--margin);
+  align-self: flex-start;
+}
+
+.added,
+.notAdded {
+  width: var(--size);
+  height: var(--size);
+}
+
+.path {
+  stroke-dasharray: 27;
+  stroke-dashoffset: -23;
+  animation: dash 500ms ease forwards;
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.notAdded {
+  width: 25px;
+  height: 25px;
+}
+
+.settings {
+  display: inline-block;
+  position: relative;
+  margin: calc(var(--iconSize) / 5);
+  width: var(--iconSize);
+  height: var(--iconSize);
+  background: white;
+  border-radius: 50%;
+  border: calc(var(--iconSize) / 3.5) solid black;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.settings:before,
+.settings:after {
+  content: '×';
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'times new roman';
+  font-weight: bold;
+  font-size: calc(var(--iconSize) * 2.5);
+  color: black;
+}
+
+.settings:after {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.iconRefresh {
+  width: var(--iconSize);
+  height: var(--iconSize);
+  margin-left: 8px;
+  cursor: pointer;
+}

@@ -45,12 +45,22 @@ function join() {
   }, 4000);
 }
 
+function checkLinkExistance(newLink, links) {
+  let isPresent = false;
+  links.forEach((link) => {
+    if (link.link === newLink) {
+      isPresent = true;
+    }
+  });
+  return isPresent;
+}
+
 async function init() {
   const link = window.location.href;
   sendMessage('showPageAction');
   setData({ link: link });
   const { links } = await getData();
-  if (links && links.includes(link)) {
+  if (links && checkLinkExistance(link, links)) {
     join();
   }
 }
