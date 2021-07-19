@@ -55,12 +55,12 @@ export function setData(data) {
   chrome.storage.sync.set(data);
 }
 
-export function checkLinkExistance(newLink, links) {
-  let isPresent = false;
+export function getLinkFromStorage(newLink, links) {
+  let savedLink = null;
   links.forEach((link) => {
     if (link.link === newLink) {
-      isPresent = true;
+      savedLink = link;
     }
   });
-  return isPresent;
+  return savedLink;
 }

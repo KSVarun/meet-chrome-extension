@@ -1,4 +1,4 @@
-import { getData, setData, getDate, checkLinkExistance } from '../../utils.js';
+import { getData, setData, getDate, getLinkFromStorage } from '../../utils.js';
 const linkContainer = document.querySelector('.link');
 const addButton = document.querySelector('.addBtn');
 const helperText = document.querySelector('.helperText');
@@ -69,16 +69,18 @@ async function init() {
   const { link, links } = await getData();
   linkContainer.innerHTML = link;
   linkName.innerHTML = 'Untitled Meet';
-  if (
-    (!links || !checkLinkExistance(link, links)) &&
-    link !== 'https://meet.google.com/'
-  ) {
+  const savedLink = getLinkFromStorage(link, links);
+  if ((!links || !savedLink) && link !== 'https://meet.google.com/') {
     addButton.style.display = 'block';
     notAddedIcon.style.display = 'block';
-  } else {
+  } else if (link === 'https://meet.google.com/') {
     addedIcon.style.display = 'block';
     linkName.style.display = 'none';
     editIcon.style.display = 'none';
+  } else {
+    addedIcon.style.display = 'block';
+    editIcon.style.display = 'none';
+    linkName.innerHTML = savedLink.title;
   }
 
   addButton.addEventListener('click', () => addLink(link, links));
