@@ -57,10 +57,12 @@ export function setData(data) {
 
 export function getLinkFromStorage(newLink, links) {
   let savedLink = null;
-  links.forEach((link) => {
-    if (link.link === newLink) {
-      savedLink = link;
-    }
-  });
+  if (links) {
+    links.forEach((link) => {
+      if (link.link === newLink) {
+        savedLink = link;
+      }
+    });
+  }
   return savedLink;
 }

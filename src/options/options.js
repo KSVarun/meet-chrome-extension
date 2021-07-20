@@ -53,12 +53,12 @@ function addLinksToLinksContainer(links) {
 
 async function init() {
   const { links } = await getData();
-  if (links.length > 0) {
+  if (links && links.length > 0) {
     noLinkContainer.style.display = 'none';
+    addLinksToLinksContainer(links);
   } else {
     savedLinksTitle.style.display = 'none';
   }
-  addLinksToLinksContainer(links);
 }
 
 init();

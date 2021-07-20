@@ -28,11 +28,7 @@ function getNewLink(link) {
 }
 
 function addLink(link, links) {
-  if (
-    links.length &&
-    !links.includes(link) &&
-    link !== 'https://meet.google.com/'
-  ) {
+  if (links && !links.includes(link) && link !== 'https://meet.google.com/') {
     const newLink = getNewLink(link);
     const updatedLinks = [...links, newLink];
     setData({ links: updatedLinks });
