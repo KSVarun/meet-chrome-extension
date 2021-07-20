@@ -28,5 +28,5 @@
 
   "options_page": "src/options/options.html",
 
-  "permissions": ["tabs", "https://meet.google.com/*", "storage"]
+  "permissions": ["https://meet.google.com/*", "storage"]
 }
