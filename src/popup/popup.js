@@ -15,6 +15,7 @@ function updateStyle() {
   helperText.style.display = 'flex';
   addedIcon.style.display = 'block';
   notAddedIcon.style.display = 'none';
+  editIcon.style.display = 'none';
 }
 
 function getNewLink(link) {
