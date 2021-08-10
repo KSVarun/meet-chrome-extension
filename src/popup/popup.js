@@ -9,6 +9,9 @@ const reloadIcon = document.querySelector('.iconRefresh');
 const linkName = document.querySelector('.linkName');
 const linkNameInput = document.querySelector('.linkNameInput');
 const editIcon = document.querySelector('.editIcon');
+const audioCheckbox = document.querySelector('#audioCheckbox');
+const videoCheckbox = document.querySelector('#videoCheckbox');
+const options = document.querySelector('.options');
 
 function updateStyle() {
   addButton.style.display = 'none';
@@ -21,10 +24,14 @@ function updateStyle() {
 function getNewLink(link) {
   const title =
     linkNameInput.value.length > 0 ? linkNameInput.value : linkName.innerHTML;
+  const audio = audioCheckbox.checked;
+  const video = videoCheckbox.checked;
   return {
-    title: title,
-    link: link,
+    title,
+    link,
     date: getDate(),
+    audio,
+    video,
   };
 }
 
@@ -66,18 +73,23 @@ async function init() {
   const { link, links } = await getData();
   linkContainer.innerHTML = link;
   linkName.innerHTML = 'Untitled Meet';
-  const savedLink = getLinkFromStorage(link, links);
-  if ((!links || !savedLink) && link !== 'https://meet.google.com/') {
+  const savedLinkData = getLinkFromStorage(link, links);
+  if (savedLinkData.length === 0 && link !== 'https://meet.google.com/') {
     addButton.style.display = 'block';
     notAddedIcon.style.display = 'block';
   } else if (link === 'https://meet.google.com/') {
     addedIcon.style.display = 'block';
     linkName.style.display = 'none';
     editIcon.style.display = 'none';
+    options.style.display = 'none';
   } else {
     addedIcon.style.display = 'block';
     editIcon.style.display = 'none';
-    linkName.innerHTML = savedLink.title;
+    linkName.innerHTML = savedLinkData[0].title;
+    audioCheckbox.checked = savedLinkData[0].audio;
+    videoCheckbox.checked = savedLinkData[0].video;
+    audioCheckbox.disabled = true;
+    videoCheckbox.disabled = true;
   }
 
   addButton.addEventListener('click', () => addLink(link, links));

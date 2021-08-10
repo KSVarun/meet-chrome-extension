@@ -56,13 +56,9 @@ export function setData(data) {
 }
 
 export function getLinkFromStorage(newLink, links) {
-  let savedLink = null;
+  let savedLink;
   if (links) {
-    links.forEach((link) => {
-      if (link.link === newLink) {
-        savedLink = link;
-      }
-    });
+    savedLink = links.filter((link) => link.link === newLink);
   }
   return savedLink;
 }

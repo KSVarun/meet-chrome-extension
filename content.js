@@ -18,7 +18,7 @@ async function getData() {
   return await promisifiedData();
 }
 
-function initiateJoinining() {
+function initiateJoinining(audio, video) {
   let joined = false;
   if (
     !document.querySelector('.kPEoYc') &&
@@ -32,7 +32,7 @@ function initiateJoinining() {
   const muteButton = document.querySelectorAll('div[jscontroller=lCGUBd]')[0];
   if (muteButton) {
     const isMuted = muteButton.getAttribute('data-is-muted');
-    if (isMuted === 'false') {
+    if (isMuted === 'false' && audio) {
       muteButton.click();
     }
   }
@@ -42,29 +42,33 @@ function initiateJoinining() {
   )[1];
   if (cancelVideoButton) {
     const isVideoCanceled = cancelVideoButton.getAttribute('data-is-muted');
-    if (isVideoCanceled === 'false') {
+    if (isVideoCanceled === 'false' && video) {
       cancelVideoButton.click();
     }
   }
-  join(joined);
+  join(joined, audio, video);
 }
 
-function join(joined) {
+function join(joined, audio, video) {
   setTimeout(() => {
     if (!joined) {
-      initiateJoinining(joined);
+      initiateJoinining(audio, video);
     }
   }, 2000);
 }
 
-function checkLinkExistance(newLink, links) {
+function getLinkData(newLink, links) {
   let isPresent = false;
-  links.forEach((link) => {
+  let audio = true;
+  let video = true;
+  links.some((link) => {
     if (link.link === newLink) {
       isPresent = true;
+      audio = link.audio;
+      video = link.video;
     }
   });
-  return isPresent;
+  return { isPresent, audio, video };
 }
 
 async function init() {
@@ -72,8 +76,9 @@ async function init() {
   sendMessage('showPageAction');
   setData({ link: link });
   const { links } = await getData();
-  if (links && checkLinkExistance(link, links)) {
-    join(false);
+  const { isPresent, audio, video } = getLinkData(link, links);
+  if (links && isPresent) {
+    join(false, audio, video);
   }
 }
 

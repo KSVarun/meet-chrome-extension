@@ -132,3 +132,18 @@
 .linkNameInput {
   width: 90%;
 }
+
+.options {
+  display: flex;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.audio {
+  margin-right: 10px;
+}
+
+#audioCheckbox,
+#videoCheckbox {
+  margin: unset;
+}
