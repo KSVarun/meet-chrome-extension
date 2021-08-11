@@ -68,6 +68,28 @@ function editLinkName() {
   linkNameInput.focus();
 }
 
+function handleNotMeetLink() {
+  addButton.style.display = 'block';
+  notAddedIcon.style.display = 'block';
+}
+
+function handleMeetHomeLink() {
+  addedIcon.style.display = 'block';
+  linkName.style.display = 'none';
+  editIcon.style.display = 'none';
+  options.style.display = 'none';
+}
+
+function handleMeetLink(savedLinkData) {
+  addedIcon.style.display = 'block';
+  editIcon.style.display = 'none';
+  linkName.innerHTML = savedLinkData.title;
+  audioCheckbox.checked = savedLinkData.audio;
+  videoCheckbox.checked = savedLinkData.video;
+  audioCheckbox.disabled = true;
+  videoCheckbox.disabled = true;
+}
+
 async function init() {
   linkNameInput.style.display = 'none';
   const { link, links } = await getData();
@@ -75,21 +97,11 @@ async function init() {
   linkName.innerHTML = 'Untitled Meet';
   const savedLinkData = getLinkFromStorage(link, links);
   if (savedLinkData.length === 0 && link !== 'https://meet.google.com/') {
-    addButton.style.display = 'block';
-    notAddedIcon.style.display = 'block';
+    handleNotMeetLink();
   } else if (link === 'https://meet.google.com/') {
-    addedIcon.style.display = 'block';
-    linkName.style.display = 'none';
-    editIcon.style.display = 'none';
-    options.style.display = 'none';
+    handleMeetHomeLink();
   } else {
-    addedIcon.style.display = 'block';
-    editIcon.style.display = 'none';
-    linkName.innerHTML = savedLinkData[0].title;
-    audioCheckbox.checked = savedLinkData[0].audio;
-    videoCheckbox.checked = savedLinkData[0].video;
-    audioCheckbox.disabled = true;
-    videoCheckbox.disabled = true;
+    handleMeetLink(savedLinkData[0]);
   }
 
   addButton.addEventListener('click', () => addLink(link, links));
