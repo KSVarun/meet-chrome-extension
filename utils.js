@@ -25,8 +25,21 @@ const monthMap = {
   12: 'Dec',
 };
 
+const dateSuffix = {
+  1: 'st ',
+  2: 'nd ',
+  3: 'rd ',
+  21: 'st ',
+  22: 'nd ',
+  23: 'rd ',
+  31: 'st ',
+};
+
 function getMonth(month) {
-  return monthMap[month];
+  //month with be index based
+  //for example jan - 0, feb - 1, mar - 2
+  //adding 1 to make it more readable
+  return monthMap[month + 1];
 }
 
 function getTime(date) {
@@ -38,15 +51,19 @@ function getTime(date) {
   );
 }
 
+function getDateSuffix(date) {
+  return dateSuffix[date] ?? 'th ';
+}
+
 export function getDate() {
   let date = new Date();
   date =
     date.getDate().toString() +
-    'th ' +
+    getDateSuffix(date.getDate()) +
     getMonth(date.getMonth()) +
     ' ' +
     date.getFullYear() +
-    ' ' +
+    ', ' +
     getTime(date);
   return date;
 }
