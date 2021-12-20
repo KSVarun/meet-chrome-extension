@@ -46,8 +46,7 @@ section {
 }
 
 .removeBtn {
-  width: 4rem;
-  height: 1.5rem;
+  padding: 5px;
   color: white;
   background: #ff6e6b;
   border: none;

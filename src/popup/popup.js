@@ -96,7 +96,10 @@ async function init() {
   linkContainer.innerHTML = link;
   linkName.innerHTML = 'Untitled Meet';
   const savedLinkData = getLinkFromStorage(link, links);
-  if (savedLinkData.length === 0 && link !== 'https://meet.google.com/') {
+  if (
+    !savedLinkData ||
+    (savedLinkData.length === 0 && link !== 'https://meet.google.com/')
+  ) {
     handleNotMeetLink();
   } else if (link === 'https://meet.google.com/') {
     handleMeetHomeLink();

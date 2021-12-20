@@ -61,6 +61,10 @@ function getLinkData(newLink, links) {
   let isPresent = false;
   let audio = true;
   let video = true;
+  if (!links || links.length === 0) {
+    return { isPresent, audio, video };
+  }
+
   links.some((link) => {
     if (link.link === newLink) {
       isPresent = true;
