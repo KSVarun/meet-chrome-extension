@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "AutoJoin",
   "description": "Automate meet join actions",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "icons": {
     "128": "/src/assets/icon128.png",
     "48": "/src/assets/icon48.png",
