@@ -19,6 +19,8 @@ function updateStyle() {
   addedIcon.style.display = 'block';
   notAddedIcon.style.display = 'none';
   editIcon.style.display = 'none';
+  audioCheckbox.disabled = true;
+  videoCheckbox.disabled = true;
 }
 
 function getNewLink(link) {

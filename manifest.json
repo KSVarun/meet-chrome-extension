@@ -1,21 +1,21 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "AutoJoin",
   "description": "Automate meet join actions",
-  "version": "0.1.1",
+  "version": "1.0.0",
   "icons": {
     "128": "/src/assets/icon128.png",
     "48": "/src/assets/icon48.png",
     "16": "/src/assets/icon16.png"
   },
-  "page_action": {
+
+  "action": {
     "default_popup": "/src/popup/popup.html",
     "default_title": "AutoJoin"
   },
 
   "background": {
-    "scripts": ["background.js"],
-    "persistent": false
+    "service_worker": "background.js"
   },
 
   "content_scripts": [
@@ -27,5 +27,6 @@
 
   "options_page": "/src/options/options.html",
 
-  "permissions": ["https://meet.google.com/*", "storage"]
+  "permissions": ["storage"],
+  "host_permissions": ["https://meet.google.com/*"]
 }
